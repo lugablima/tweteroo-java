@@ -146,7 +146,7 @@ if [ -z "$JAVACMD" ] ; then
       # IBM's JDK on AIX uses strange locations for the executables
       JAVACMD="$JAVA_HOME/jre/sh/java"
     else
-      JAVACMD="$JAVA_HOME/bin/java"
+      JAVACMD="$JAVA_HOME"
     fi
   else
     JAVACMD="`\\unset -f command; \\command -v java`"
@@ -273,7 +273,7 @@ else
                 if [ "$MVNW_VERBOSE" = true ]; then
                   echo " - Running MavenWrapperDownloader.java ..."
                 fi
-                ("$JAVA_HOME/bin/java" -cp .mvn/wrapper MavenWrapperDownloader "$MAVEN_PROJECTBASEDIR")
+                ("$JAVA_HOME" -cp .mvn/wrapper MavenWrapperDownloader "$MAVEN_PROJECTBASEDIR")
             fi
         fi
     fi
