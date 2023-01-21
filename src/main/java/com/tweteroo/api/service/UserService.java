@@ -19,7 +19,13 @@ public class UserService {
         return repository.findAll();
     }
 
-    public void save(UserDTO userDTO) {
-        repository.save(new User(userDTO));
+    public User save(UserDTO userDTO) {
+        var user = repository.findByUsername(userDTO.username());
+
+        if(user.isPresent()) {
+            return null;
+        }
+
+        return repository.save(new User(userDTO));
     }
 }
