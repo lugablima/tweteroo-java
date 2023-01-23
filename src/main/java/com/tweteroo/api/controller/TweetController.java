@@ -8,10 +8,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,7 +24,8 @@ import com.tweteroo.api.service.TweetService;
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/tweets")
+@CrossOrigin(origins = "*")
+@RequestMapping("/api/tweets")
 public class TweetController {
 
     @Autowired
@@ -40,15 +43,15 @@ public class TweetController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Tweet>> findPage(@PageableDefault(page = 0, size = 5) Pageable page) {
+    public ResponseEntity<Page<Tweet>> findPage(@PageableDefault(page = 0, size = 5) Pageable page) {
         Page<Tweet> tweets = service.findPage(page);
 
-        return ResponseEntity.status(HttpStatus.OK).body(tweets.getContent());
+        return ResponseEntity.status(HttpStatus.OK).body(tweets);
     }
     
     @PostMapping
-    public ResponseEntity<String> create(@RequestBody @Valid TweetDTO tweetDTO) {
-        var tweet = service.create(tweetDTO);
+    public ResponseEntity<String> create(@RequestHeader("User") String username, @RequestBody @Valid TweetDTO tweetDTO) {
+        var tweet = service.create(username, tweetDTO);
 
         if(tweet != null) {
             return ResponseEntity.status(HttpStatus.CREATED).body("OK");

@@ -25,8 +25,8 @@ public class TweetService {
     @Autowired
     private UserRepository userRepository; 
 
-    public Tweet create(TweetDTO tweetDTO) {
-        Optional<User> user = userRepository.findByUsername(tweetDTO.username());
+    public Tweet create(String username, TweetDTO tweetDTO) {
+        Optional<User> user = userRepository.findByUsername(username);
 
         if(!user.isPresent()) {
             return null;

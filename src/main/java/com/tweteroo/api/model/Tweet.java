@@ -20,7 +20,7 @@ public class Tweet {
     public Tweet(Optional<User> user, TweetDTO tweetDTO) {
         this.username = user.get().getUsername();
         this.avatar =  user.get().getAvatar();
-        this.text = tweetDTO.tweet();
+        this.text = tweetDTO.text();
     }
 
     @Id
