@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.tweteroo.api.dto.TweetDTO;
@@ -43,5 +47,15 @@ public class TweetService {
         Collections.reverse(tweets);
 
         return tweets;
+    }
+
+    public Page<Tweet> findPage(Pageable pageable) {
+        int page = pageable.getPageNumber();
+        int size = pageable.getPageSize();
+
+        Pageable pageRequest = PageRequest.of(
+            page, size, Sort.by("id").descending());
+
+        return tweetRepository.findAll(pageRequest);
     }
 }
